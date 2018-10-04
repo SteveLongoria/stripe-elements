@@ -30,7 +30,7 @@ app.post("/charge", (req, res) => {
   let amount = 500;
 
   stripe.customers.create({
-     email: req.body.stripeEmail,
+     email: req.body.email,
     source: req.body.stripeToken
   })
   .then(customer =>
