@@ -31,7 +31,8 @@ app.post("/charge", (req, res) => {
 
   stripe.customers.create({
      email: req.body.email,
-    source: req.body.stripeToken
+    source: req.body.stripeToken,
+    description: req.body.name
   })
   .then(customer =>
     stripe.charges.create({
