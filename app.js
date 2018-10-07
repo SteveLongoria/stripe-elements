@@ -27,22 +27,18 @@ app.use('/users', usersRouter);
 app.use('/about', aboutRouter);
 
 app.post("/charge", (req, res) => {
-  let amount = 500;
 
-  stripe.customers.create({
+stripe.customers.create({
      email: req.body.email,
     source: req.body.stripeToken,
     description: req.body.name
-  })
-  .then(customer =>
-    stripe.charges.create({
-      amount,
-      description: "Sample Charge",
-         currency: "usd",
-         customer: customer.id
-    }))
-  .then(charge => res.render("charge.hbs"));
-});
+  }).then(customer => 
+  stripe.subscriptions.create({
+  customer: customer.id,
+  items: [{plan: "plan_DguBnFdeQ27pja"}],
+})).then(charge => res.render("charge.hbs"));
+  
+  });
 
 app.listen(4567);
 
